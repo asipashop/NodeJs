@@ -1,81 +1,80 @@
-const express = require('express')
-const app = express()
+const express = require("express"); //import express
+const app = express();
+const array_routes = require("./routes"); //import dari routes.js
+const array_sort = require("./lib/task1.js");
+const lib = require("./lib/task1");
+const object_lib = require("./lib/object.js");
 
 app.use(express.urlencoded({
     extended: true
-}))
+}));
 
-app.get('/', (req, res) => {
-    var x, y, z
-    x = 5
-    y = 3
-    z = x + y
+app.get("/", (req, res) => {
+    //home
+    return res.send(`Welcome to the hell`);
+});
 
-    return res.send(`The Value of z is ${z}`)
-})
+app.get("/task-1", (req, res) => {
+    let alpha = ["Q", "W", "E", "A", "S", "D", "Z", "C"];
+    console.log("Before", alpha);
 
-app.post('/', (req, res) => {
-    let email = req.body.email
-    return res.send(`The email value is ${email}`)
-})
+    let result = array_sort.ascending_test(alpha);
+    console.log("After", result);
+});
 
-app.post('/kondisi', (req, res) => {
-    var a, b, c, d;
-    /**
-     * Data type of variable a & b must be number, not string
-     */
-    a = parseInt(req.body.a)
-    b = parseInt(req.body.b)
-    c = parseInt(req.body.c)
-    d = a + b * c
+app.get("/task-2", (req, res) => {
+    let alpha = ["Q", "W", "E", "A", "S", "D", "Z", "C"];
+    console.log("Before", alpha);
 
-    if (d < 10) {
-        text = "Good morning";
-    } else if (d > 20) {
-        text = "Good day";
-    } else {
-        text = "Good evening";
-    }
-    /**
-     * Check data type of all variable
-     */
-    console.log(typeof a)
-    console.log(typeof b)
-    console.log(typeof c)
-    console.log(typeof d)
+    let result = array_sort.descending_test(alpha);
+    console.log("After", result);
+
+    return res.send(result);
+});
 
 
-    return res.send(`The result value is ${text}`)
-})
+app.get("/nama-1", (req, res) => {
+    let alpha = ["Yosafat", "Joko Kuncoro", "Hendriono", "Tosikin", "Tiara", "Soni"];
+    console.log("Before", alpha);
 
-// tambah
+    let result = array_sort.ascending_test(alpha);
+    console.log("After", result);
 
-app.post('/tambah', (req, res) => {
-    var a, b, c
+    return res.send(result);
+});
 
-    a = parseInt(req.body.a)
-    b = parseInt(req.body.b)
-    c = parseInt(req.body.c)
-    d = a + b + c
+app.get("/nama-2", (req, res) => {
+    let alpha = ["Yosafat", "Joko Kuncoro", "Hendriono", "Tosikin", "Tiara", "Soni"];
+    console.log("Before", alpha);
 
-    if (d < 10) {
-        message = "kekurangan";
-    } else if (d > 20) {
-        message = "kelebihan";
-    } else {
-        message = "tepat";
-    }
+    let result = array_sort.descending_test(alpha);
+    console.log("After", result);
 
-    console.log(typeof a)
-    console.log(typeof b)
-    console.log(typeof c)
-    console.log(typeof d)
+    return res.send(result);
+});
+
+app.get("/nama-3", (req, res) => {
+    let data = ["Yosafat", "Joko Kuncoro", "Hendriono", "Tosikin", "Tiara", "Soni"]
+    let result = lib.manipulate(data)
+
+    return res.send(result)
+});
 
 
-    return res.send(`The result value is ${message}`)
-})
+app.get("/nama-4", (req, res) => {
+    let input = ["Trie", "Pawit"];
+    let data = ["Yosafat", "Joko Kuncoro", "Hendriono", "Tosikin", "Tiara", "Soni"];
+    console.log("before ", data);
 
+    let result = object_lib.merge((data = data), (input = input));
+    console.log("after ", result);
+
+    return res.send(result);
+});
+
+
+app.use("/array", array_routes);
 
 app.listen(3300, () => {
-    console.log(`Example app listening on port 3300`)
-})
+    console.log(`Example app listening on port 3300`);
+});
