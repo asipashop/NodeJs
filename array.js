@@ -1,6 +1,5 @@
 module.exports = (data) => {
     let length, first, second, last, all
-
     length = data.length
     first = data[0]
     second = data[1]
