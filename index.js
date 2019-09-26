@@ -2,7 +2,6 @@ const express = require("express"); //import express
 const app = express();
 const array_routes = require("./routes"); //import dari routes.js
 const array_sort = require("./lib/task1.js");
-const array_lib = require("./lib/task1");
 const object_lib = require("./lib/object.js");
 
 app.use(express.urlencoded({
@@ -12,16 +11,19 @@ app.use(express.urlencoded({
 
 app.get("/", (req, res) => {
     //home
-    return res.send(`Welcome to the hell`);
+    return res.send(`Welcome to Jakarta`);
 });
 
 // Task-1 dan Task-2
+
 app.get("/task-1", (req, res) => {
     let alpha = ["Q", "W", "E", "A", "S", "D", "Z", "C"];
     console.log("Before", alpha);
 
     let result = array_sort.ascending_test(alpha);
     console.log("After", result);
+
+    return res.send(result);
 });
 
 app.get("/task-2", (req, res) => {
@@ -34,7 +36,10 @@ app.get("/task-2", (req, res) => {
     return res.send(result);
 });
 
+
+
 // Nama-1, 2, 3, 4
+
 app.get("/nama-1", (req, res) => {
     let alpha = ["Yosafat", "Joko Kuncoro", "Hendriono", "Tosikin", "Tiara", "Soni"];
     console.log("Before", alpha);
@@ -57,11 +62,13 @@ app.get("/nama-2", (req, res) => {
 
 app.get("/nama-3", (req, res) => {
     let data = ["Yosafat", "Joko Kuncoro", "Hendriono", "Tosikin", "Tiara", "Soni"]
-    let result = array_lib.manipulate(data)
+    console.log("before", data);
+
+    let result = array_sort.manipulate(data)
+    console.log("After", result);
 
     return res.send(result)
 });
-
 
 app.get("/nama-4", (req, res) => {
     let input = ["Trie", "Pawit"];
@@ -69,6 +76,17 @@ app.get("/nama-4", (req, res) => {
     console.log("before", data);
 
     let result = object_lib.merge((data = data), (input = input));
+    console.log("after", result);
+
+    return res.send(result);
+});
+
+
+app.get("/nama-5", (req, res) => {
+    let data = ["Yosafat", "Joko Kuncoro", "Hendriono", "Tosikin", "Tiara", "Soni"];
+    console.log("before", data);
+
+    let result = array_sort.manipulated(data);
     console.log("after", result);
 
     return res.send(result);

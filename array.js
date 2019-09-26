@@ -1,12 +1,13 @@
 module.exports = (data) => {
     let length, first, second, last, all
-    length = data.length
-    first = data[0]
-    second = data[1]
-    last = data[length - 1]
-    all = data
 
-    let = result = {
+    length = data.length // Total huruf termasuk spasi
+    first = data[0] // Array data pertama
+    second = data[1] // array data kedua
+    last = data[length - 1] // Array data terakhir
+    all = data // Semua data
+
+    let = result = { // variable hasil
         length,
         first,
         second,
@@ -14,5 +15,5 @@ module.exports = (data) => {
         all
     }
 
-    return result
+    return result // Panggil variable
 }
