@@ -1,8 +1,8 @@
-const express = require("express");
-const router = express.Router();
+// const express = require("express");
+// const router = express.Router();
 
-router.get("", (req, res) => {
-    return res.send("Array routes");
-});
+// router.get("", (req, res) => {
+//     return res.send("Array routes");
+// });
 
-module.exports = router;
+// module.exports = router;
