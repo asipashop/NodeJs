@@ -15,3 +15,5 @@ router.get('/', (req, res) => {
         database_status: db_status_name[db_status]
     })
 })
+
+module.exports = router
