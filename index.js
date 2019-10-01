@@ -13,6 +13,7 @@ app.use(express.urlencoded({
     extended: true
 }))
 
+
 app.get('/', (req, res) => {
     return res.send(`<marquee>Welcome to the beginning of nothingness</marquee>`)
 })
