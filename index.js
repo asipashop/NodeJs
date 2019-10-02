@@ -7,6 +7,7 @@ require("./db") // database connection
  */
 const index_routes = require("./routes/index")
 const book_routes = require("./routes/books")
+const member_routes = require("./routes/member")
 
 // for parsing application/x-www-form-urlencoded
 app.use(express.urlencoded({
@@ -23,7 +24,10 @@ app.get('/', (req, res) => {
  */
 app.use("/index", index_routes)
 app.use("/book", book_routes)
+app.use("/member", member_routes)
 
-app.listen(3300, () => {
-    console.log(`Example app listening on port 3300`)
+
+port = 3300
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
 })
