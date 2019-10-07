@@ -6,7 +6,7 @@ require("./db") // database connection
  * Import routes files
  */
 const index_routes = require("./routes/index")
-const book_routes = require("./routes/books")
+const book_routes = require("./routes/book")
 const member_routes = require("./routes/member")
 
 // for parsing application/x-www-form-urlencoded

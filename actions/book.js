@@ -30,12 +30,70 @@ const create = (req) => {
 
 const getAll = async() => {
     let query = await Book.find({}).exec()
-    console.log(`Result ${query}`)
+        // console.log(`Result ${query}`)
 
     return query
 }
 
+const update = async(id, updated_data) => {
+    let {
+        title,
+        description,
+        price,
+        fresh
+    } = updated_data
+    let opts = {
+        new: fresh === "true" ? true : false
+    }
+    let data = {
+        title,
+        description,
+        price
+    }
+
+    try {
+        let query = await Book.findOneAndUpdate({
+            _id: id
+        }, data, opts).exec()
+
+        return query
+    } catch (err) {
+        throw err
+    }
+}
+
+const detail = async(id) => {
+    try {
+        let query = await Book.findOne({
+            _id: id
+        }).exec()
+
+        return query
+    } catch (err) {
+        throw err
+    }
+}
+
+const destroy = async(id) => {
+    try {
+        let query = await Book.findOneAndDelete({
+            _id: id
+        }).exec()
+
+        return query
+    } catch (err) {
+        throw err
+    }
+}
+
+
+
+
+
 module.exports = {
     create,
-    getAll
+    getAll,
+    update,
+    destroy,
+    detail
 }
