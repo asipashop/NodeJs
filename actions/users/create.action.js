@@ -1,4 +1,4 @@
-const UserModel = require("../../models/user") //import model
+const UserModel = require("../../models/user.model") //import model
 
 class CreateUser {
     constructor(req) {

@@ -2,7 +2,7 @@ const Book = require("../models/book")
 const {
     isInteger
 } = require("lodash")
-const User = require("../models/user")
+const User = require("../models/user.model")
 
 const create = (req) => {
     let {

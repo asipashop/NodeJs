@@ -1,20 +1,16 @@
-const User = require("../models/user")
+const User = require("../models/user.model")
 
 const create = async(req) => {
     let {
         name,
         email,
-        phone,
-        alamat,
-        password
+        phone
     } = req.body
     phone = parseInt(phone)
     var insert_data = {
         name,
         email,
-        phone,
-        alamat,
-        password
+        phone
     }
 
     let data = new User(insert_data)
@@ -35,9 +31,7 @@ const getAll = async() => {
             return {
                 name: v.name,
                 email: v.email,
-                phone: v.phone,
-                alamat: v.alamat,
-                password: v.password
+                phone: v.phone
             }
         })
 
@@ -64,8 +58,6 @@ const update = async(id, updated_data) => {
         name,
         email,
         phone,
-        alamat,
-        password
         fresh
     } = updated_data
     let opts = {
@@ -74,9 +66,7 @@ const update = async(id, updated_data) => {
     let data = {
         name,
         email,
-        phone,
-        alamat,
-        password
+        phone
     }
 
     try {

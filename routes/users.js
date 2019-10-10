@@ -6,9 +6,40 @@ const {
     getDetail,
     update,
     destroy
-} = require("../actions/member")
+} = require("../actions/users")
+const {
+    check,
+    validationResult,
+    body
+} = require("express-validator")
+const jwt = require("jsonwebtoken")
 
-router.post("/", async(req, res) => {
+router.post("/", [
+    check('name').not().isEmpty(),
+    check('email').not().isEmpty(),
+    check('password').not().isEmpty().isLength({
+        min: 8
+    }),
+    check('password_confirmation').not().isEmpty(),
+    body('password_confirmation').custom((value, {
+        req
+    }) => {
+        if (value != req.body.password) {
+            throw new Error('Password confirmation does not match')
+        } else {
+            return true
+        }
+    })
+], async (req, res) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        return res.status(422).json({
+            status: "error",
+            message: errors.array()
+        })
+    }
+
     try {
         let data = await create(req)
 
@@ -25,7 +56,7 @@ router.post("/", async(req, res) => {
     }
 })
 
-router.get("/", async(req, res) => {
+router.get("/", async (req, res) => {
     try {
         let data = await getAll()
 
@@ -42,8 +73,28 @@ router.get("/", async(req, res) => {
     }
 })
 
+router.get("/my-profile", async (req, res) => {
+    try {
+        let user_token = req.header("Authorization")
+        let user_data = await jwt.verify(user_token, process.env.JWT_SECRET)
+        console.log(`User data from token ${JSON.stringify(user_data)}`)
 
-router.get("/:id", async(req, res) => {
+        let data = await getDetail(user_data.user_id)
+
+        return res.status(200).json({
+            status: "success",
+            data,
+            message: "User login data"
+        })
+    } catch (err) {
+        return res.status(400).json({
+            status: "error",
+            message: err.message
+        })
+    }
+})
+
+router.get("/:id", async (req, res) => {
     try {
         let {
             id
@@ -63,26 +114,15 @@ router.get("/:id", async(req, res) => {
     }
 })
 
-
-router.put("/:id", async(req, res) => {
+router.put("/:id", async (req, res) => {
     let {
         id
     } = req.params
-    let {
-        nik,
-        nama,
-        alamat,
-        email,
-        phone,
-        fresh
-    } = req.body
     let updated_data = {
-        nik,
-        nama,
-        alamat,
-        email,
-        phone,
-        fresh
+        name: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone,
+        fresh: req.body.fresh
     }
 
     try {
@@ -91,8 +131,7 @@ router.put("/:id", async(req, res) => {
         return res.status(200).json({
             status: "success",
             data,
-            message: "User data updated successfully!",
-            updated_data
+            message: "User data updated successfully!"
         })
     } catch (err) {
         return res.status(400).json({
@@ -102,8 +141,7 @@ router.put("/:id", async(req, res) => {
     }
 })
 
-
-router.delete("/:id", async(req, res) => {
+router.delete("/:id", async (req, res) => {
     let {
         id
     } = req.params
