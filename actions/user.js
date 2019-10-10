@@ -1,23 +1,23 @@
-const Member = require("../models/member")
+const User = require("../models/user")
 
 const create = async(req) => {
     let {
-        nik,
         name,
-        alamat,
         email,
-        phone
+        phone,
+        alamat,
+        password
     } = req.body
     phone = parseInt(phone)
     var insert_data = {
-        nik,
         name,
-        alamat,
         email,
-        phone
+        phone,
+        alamat,
+        password
     }
 
-    let data = new Member(insert_data)
+    let data = new User(insert_data)
 
     try {
         await data.save()
@@ -30,14 +30,14 @@ const create = async(req) => {
 
 const getAll = async() => {
     try {
-        let query = await Member.find({}).exec()
+        let query = await User.find({}).exec()
         let data = query.map((v, i) => {
             return {
-                nik: v.nik,
                 name: v.name,
-                alamat: v.alamat,
                 email: v.email,
-                phone: v.phone
+                phone: v.phone,
+                alamat: v.alamat,
+                password: v.password
             }
         })
 
@@ -49,7 +49,7 @@ const getAll = async() => {
 
 const getDetail = async(id) => {
     try {
-        let query = await Member.findOne({
+        let query = await User.findOne({
             _id: id
         }).exec()
 
@@ -61,26 +61,26 @@ const getDetail = async(id) => {
 
 const update = async(id, updated_data) => {
     let {
-        nik,
         name,
-        alamat,
         email,
         phone,
+        alamat,
+        password
         fresh
     } = updated_data
     let opts = {
         new: fresh === "true" ? true : false
     }
     let data = {
-        nik,
         name,
-        alamat,
         email,
-        phone
+        phone,
+        alamat,
+        password
     }
 
     try {
-        let query = await Member.findOneAndUpdate({
+        let query = await User.findOneAndUpdate({
             _id: id
         }, data, opts).exec()
 
@@ -92,7 +92,7 @@ const update = async(id, updated_data) => {
 
 const destroy = async(id) => {
     try {
-        let query = await Member.findOneAndDelete({
+        let query = await User.findOneAndDelete({
             _id: id
         }).exec()
 

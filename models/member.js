@@ -7,7 +7,7 @@ const Schema = mongoose.Schema
 
 let memberSchema = new Schema({
     nik: Number,
-    nama: String,
+    name: String,
     alamat: String,
     email: String,
     phone: Number,

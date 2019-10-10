@@ -2,6 +2,7 @@ const Book = require("../models/book")
 const {
     isInteger
 } = require("lodash")
+const User = require("../models/user")
 
 const create = (req) => {
     let {
@@ -29,8 +30,12 @@ const create = (req) => {
 }
 
 const getAll = async() => {
-    let query = await Book.find({}).exec()
-        // console.log(`Result ${query}`)
+    let query = await Book.find({})
+
+    .populate([{
+        path: 'author',
+        model: User
+    }]).exec()
 
     return query
 }
