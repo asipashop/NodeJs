@@ -9,6 +9,7 @@ let bookSchema = new Schema({
     title: String,
     description: String,
     price: Number,
+    shop_id: String,
     created_at: {
         type: Date,
         default: Date.now

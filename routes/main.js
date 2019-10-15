@@ -10,7 +10,7 @@ const routes = (app) => {
     app.use("/", index)
     app.use("/auth", auth)
     app.use("/book", books)
-    app.use("/shop", verifyToken(), shops)
+    app.use("/shop", shops)
     app.use("/user", users)
     app.use("/reset", reset)
 }

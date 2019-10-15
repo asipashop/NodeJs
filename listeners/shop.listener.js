@@ -6,12 +6,13 @@ const shop = {
     add_qty: async data => {
         try {
             let _id = data.shop_id
+            console.log(_id)
             let shop = await new ShowShop(_id).exec()
             console.log(`Shop book qty ${shop.book_qty}`)
             let book_qty = parseInt(shop.book_qty) + 1
 
             let update = await new UpdateShop({
-                _ id
+                _id
             }, {
                 book_qty
             }).exec()
@@ -24,5 +25,5 @@ const shop = {
 
 
 module.exports = eventEmitter => {
-    eventEmitter.on("shop.add_qty", shop.add_qty)
+    eventEmitter.on("shop.add-qty", shop.add_qty)
 }

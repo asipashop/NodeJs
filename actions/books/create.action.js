@@ -11,8 +11,9 @@ class Create {
     async exec() {
         try {
             shopListener(emitter) // as subscriber
-
             let result = new Book(this.data)
+            console.log(result)
+
             await result.save()
 
             emitter.emit("shop.add-qty", result) //as publisher
