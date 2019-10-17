@@ -1,28 +1,56 @@
-const UserModel = require("../../models/user.model") //import model
+const User = require("../../models/user.model")
+const API = require("../../core/action.core")
+const bcrypt = require("bcryptjs")
+const {
+    validationResult
+} = require("express-validator")
 
-class CreateUser {
-    constructor(req) {
-        this.name = req.body.name
-        this.email = req.body.email
-        this.telepon = req.body.telepon
-        this.alamat = req.body.alamat
+class Create extends API {
+    constructor() {
+        super(User)
     }
 
-    async exec() {
-        try {
-            let query = new UserModel({
-                name: this.name,
-                email: this.email,
-                telepon: this.telepon,
-                alamat: this.alamat
+    async exec(req, res, next) {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.send({
+                code: 422,
+                status: "error",
+                message: errors.array()
             })
-            await query.save()
+        }
 
-            return query
+        try {
+            let {
+                name,
+                email,
+                phone,
+                password
+            } = req.body
+            password = bcrypt.hashSync(password, 8) // params: password, salt
+            console.log(`Hashing password ${password}`)
+            let request_data = {
+                name,
+                email,
+                phone,
+                password
+            }
+
+            let data = await this.create(request_data)
+
+            return res.send({
+                code: 201,
+                status: "success",
+                data
+            })
         } catch (err) {
-            throw err
+            return res.send({
+                code: 400,
+                status: "error",
+                message: err.message
+            })
         }
     }
 }
 
-module.exports = CreateUser
+module.exports = Create
